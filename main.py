@@ -1,17 +1,11 @@
-import os
-import requests
-from dotenv import load_dotenv
-from bs4 import BeautifulSoup
-from openai import OpenAI
-from utils import display_markdown, check_api_key
+from utils.utils import display_markdown, test_OpenAI_API
+from settings import get_api_key, get_headers
+from utils.WebsiteParser import WebsiteParser
 
-# display_markdown("### Title")
+api_key = get_api_key()
+# headers = get_headers()
 
-# load_dotenv(override=True)
-# api_key = os.getenv('OPENAI_API_KEY')
-
-# Test the OpenAI API
-# openai = OpenAI()
-# message = "Hello, GPT! This is my first ever message to you! Hi!"
-# response = openai.chat.completions.create(model="gpt-4o-mini", messages=[{"role":"user", "content":message}])
-# print(response.choices[0].message.content)
+url = "https://denniecodes.com"
+parser = WebsiteParser(url)
+print(parser.title)
+print(parser.text)
