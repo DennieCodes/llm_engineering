@@ -1,8 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from settings import get_headers
-
-headers = get_headers()
+from settings import headers
 
 class WebsiteParser:
 

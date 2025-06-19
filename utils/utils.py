@@ -1,6 +1,8 @@
 from openai import OpenAI
+from ollama import chat
 from prompts.website_analysis import system_prompt
 from utils.WebsiteParser import WebsiteParser
+from settings import MODEL
 
 def display_markdown(text):
     print("\n" + "-" * 40)
@@ -40,15 +42,21 @@ def messages_for(website):
         {"role": "user", "content": user_prompt_for(website)}
     ]
 
-def summarize(url):
+def summarize(url, method):
     website = WebsiteParser(url)
-    openai = OpenAI()
-    response = openai.chat.completions.create(
-        model = "gpt-4o-mini",
-        messages = messages_for(website)
-    )
-    return response.choices[0].message.content
+    if method == "OpenAI":
+        openai = OpenAI()
+        response = openai.chat.completions.create(
+            model = "gpt-4o-mini",
+            messages = messages_for(website)
+        )
+        return response.choices[0].message.content
+    elif method == "Ollama":
+        response = chat(model=MODEL, messages=messages_for(website))
+        return response['message']['content']
+    else:
+        return "Please, select OpenAI or Ollama in your argument."
 
-def display_summary(url):
-    summary = summarize(url)
+def display_summary(url, method):
+    summary = summarize(url, method)
     display_markdown(summary)
