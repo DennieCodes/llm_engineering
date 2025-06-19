@@ -1,4 +1,6 @@
 from openai import OpenAI
+from prompts.website_analysis import system_prompt
+from utils.WebsiteParser import WebsiteParser
 
 def display_markdown(text):
     print("\n" + "-" * 40)
@@ -24,16 +26,29 @@ def test_OpenAI_API():
     except Exception as e:
         return f"An error occurred while testing the OpenAI API: {e}"
 
-class Website:
+def user_prompt_for(website):
+    user_prompt = f"You are looking at a website titled {website.title}"
+    user_prompt += "\nThe contents of this website is as follows; \
+        please provide a short summary of this website in markdown. \
+        If it includes news or announcements, then summarize these too.\n\n"
+    user_prompt += website.text
+    return user_prompt
 
-    def __init__(self, url):
-        """
-        Create this Website object from the given url using the BeautifulSoup library
-        """
-        self.url = url
-        response = requests.get(url, headers=headers)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        self.title = soup.title.string if soup.title else "No title found"
-        for irrelevant in soup.body(["script", "style", "img", "input"]):
-            irrelevant.decompose()
-        self.text = soup.body.get_text(separator="\n", strip=True)
+def messages_for(website):
+    return [
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt_for(website)}
+    ]
+
+def summarize(url):
+    website = WebsiteParser(url)
+    openai = OpenAI()
+    response = openai.chat.completions.create(
+        model = "gpt-4o-mini",
+        messages = messages_for(website)
+    )
+    return response.choices[0].message.content
+
+def display_summary(url):
+    summary = summarize(url)
+    display_markdown(summary)
