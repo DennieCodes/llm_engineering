@@ -1,7 +1,7 @@
 from openai import OpenAI
 from ollama import chat
 from prompts.website_analysis import system_prompt
-from utils.WebsiteParser import WebsiteParser
+from classes.WebsiteParser import WebsiteParser
 from settings import MODEL
 
 def display_markdown(text):

@@ -14,3 +14,4 @@ headers = {
 OLLAMA_API = "http://localhost:11434/api/chat"
 HEADERS = {"Content-Type": "application/json"}
 MODEL = "llama3.2"
+MODEL4o = 'gpt-4o-mini'
