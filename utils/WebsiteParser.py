@@ -3,11 +3,10 @@ from bs4 import BeautifulSoup
 from settings import headers
 
 class WebsiteParser:
-
+    """
+    Create this Website object from the given url using the BeautifulSoup library
+    """
     def __init__(self, url):
-        """
-        Create this Website object from the given url using the BeautifulSoup library
-        """
         self.url = url
         response = requests.get(url, headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
