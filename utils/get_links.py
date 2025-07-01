@@ -1,4 +1,4 @@
-from classes.WebsiteLinksScraper import Website
+from classes.WebsiteLinksScraper import WebsiteLinkScraper
 from openai import OpenAI
 from settings import MODEL4o
 from prompts.website_scraper import link_system_prompt
@@ -15,7 +15,7 @@ Do not include Terms of Service, Privacy, email links.\n"
     return user_prompt
 
 def get_links(url):
-    website = Website(url)
+    website = WebsiteLinkScraper(url)
     response = openai.chat.completions.create(
         model=MODEL4o,
         messages=[

@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from settings import headers
 
-class Website:
+class WebsiteLinkScraper:
     """
     A utility class to represent a Website that we have scraped, now with links
     """
