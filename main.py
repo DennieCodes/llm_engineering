@@ -1,6 +1,6 @@
-from utils.create_brochure import create_brochure
+from utils.stream_brochure import stream_brochure
 
 # from settings import get_api_key
 # api_key = get_api_key()
 
-create_brochure("HuggingFace", "https://huggingface.co")
+stream_brochure("HuggingFace", "https://huggingface.co")
