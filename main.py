@@ -1,6 +1,3 @@
-from utils.index import stream_brochure
+from utils.index import check_api_key
 
-# from settings import get_api_key
-# api_key = get_api_key()
-
-stream_brochure("HuggingFace", "https://huggingface.co")
+check_api_key()
