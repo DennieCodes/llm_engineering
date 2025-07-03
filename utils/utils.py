@@ -3,21 +3,31 @@ from ollama import chat
 from prompts.website_analysis import system_prompt
 from classes.WebsiteParser import WebsiteParser
 from settings import MODEL
+from settings import get_open_api_key, get_google_api_key, get_anthropic_api_key
 
 def display_markdown(text):
     print("\n" + "-" * 40)
     print(text)
     print("-" * 40 + "\n")
 
-def check_api_key(api_key):
-    if not api_key:
-        return "No API key was found - please head over to the troubleshooting notebook in this folder to identify & fix!"
-    elif not api_key.startswith("sk-proj-"):
-        return "An API key was found, but it doesn't start sk-proj-; please check you're using the right key - see troubleshooting notebook"
-    elif api_key.strip() != api_key:
-        return "An API key was found, but it looks like it might have space or tab characters at the start or end - please remove them - see troubleshooting notebook"
+def check_api_key():
+    openai_api_key = get_open_api_key()
+    if openai_api_key:
+        print(f"OpenAI API Key exists and begins {openai_api_key[:8]}")
     else:
-        return "API key found and looks good so far!"
+        print("OpenAI API Key not set")
+
+    anthropic_api_key = get_anthropic_api_key()
+    if anthropic_api_key:
+        print(f"Anthropic API Key exists and begins {anthropic_api_key[:7]}")
+    else:
+        print("Anthropic API Key not set")
+
+    google_api_key = get_google_api_key()
+    if google_api_key:
+        print(f"Google API Key exists and begins {google_api_key[:8]}")
+    else:
+        print("Google API Key not set")
 
 def test_OpenAI_API():
     try:
