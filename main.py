@@ -1,6 +1,10 @@
-from classes.GoogleClient import GoogleClient
-from utils.index import display_markdown
+# from classes.GoogleClient import GoogleClient
+# from utils.index import display_markdown
 
-user_prompt = "Tell me about the latest in LLM developments"
-formatted_content = display_markdown(GoogleClient.generate_content(user_prompt))
-print(formatted_content)
+# user_prompt = "Tell me about the latest in LLM developments"
+# formatted_content = display_markdown(GoogleClient.generate_content(user_prompt))
+# print(formatted_content)
+
+from utils.adversaries import call_gpt,call_claude
+
+print(call_claude())

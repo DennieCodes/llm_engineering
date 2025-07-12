@@ -4,15 +4,15 @@ class ClaudeClient:
 	_claude = anthropic.Anthropic()
 
 	_system_message = "You are a technological evangelist."
+	_model = "claude-3-7-sonnet-latest"
 
 	@classmethod
-	def create_messages(cls, user_prompt):
+	def create_messages(cls, user_prompt, model=_model, system_message=_system_message):
+		print("The user prompt is:\n", user_prompt)
 		return cls._claude.messages.create(
-			model="claude-3-7-sonnet-latest",
+			model=model,
 			max_tokens=200,
 			temperature=0.7,
-			system=cls._system_message,
-			messages=[
-				{"role": "user", "content": user_prompt},
-			],
+			system=system_message,
+			messages=user_prompt
 		)
