@@ -4,10 +4,8 @@ from classes.ClaudeClient import ClaudeClient
 
 gpt_model = "gpt-4o-mini"
 claude_model = "claude-3-haiku-20240307"
-gpt_messages = ["Hi there"]
-claude_messages = ["Hi"]
 
-def call_gpt():
+def call_gpt(gpt_messages, claude_messages):
     messages = [{"role": "system", "content": gpt_system}]
     for gpt, claude in zip(gpt_messages, claude_messages):
         messages.append({"role": "assistant", "content": gpt})
@@ -18,7 +16,7 @@ def call_gpt():
     )
     return completion.choices[0].message.content
 
-def call_claude():
+def call_claude(claude_messages, gpt_messages):
     messages = []
     for gpt, claude_message in zip(gpt_messages, claude_messages):
         messages.append({"role": "user", "content": gpt})

@@ -8,7 +8,6 @@ class ClaudeClient:
 
 	@classmethod
 	def create_messages(cls, user_prompt, model=_model, system_message=_system_message):
-		print("The user prompt is:\n", user_prompt)
 		return cls._claude.messages.create(
 			model=model,
 			max_tokens=200,
