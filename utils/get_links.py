@@ -1,4 +1,4 @@
-from utils.index import scrape_website_links
+from utils.scrape_website_links import scrape_website_links
 from openai import OpenAI
 from settings import MODEL4o
 from utils.prompt_loader import get_prompt

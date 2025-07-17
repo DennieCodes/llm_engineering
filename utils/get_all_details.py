@@ -1,4 +1,4 @@
-from utils.index import scrape_website_links
+from utils.scrape_website_links import scrape_website_links
 from utils.get_links import get_links
 
 def get_all_details(url):
