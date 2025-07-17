@@ -2,16 +2,14 @@ from classes.WebsiteLinksScraper import WebsiteLinkScraper
 from openai import OpenAI
 from settings import MODEL4o
 from utils.prompt_loader import get_prompt
+from utils.user_prompt_loader import get_user_prompt
 import json
 
 openai = OpenAI()
 
 def get_links_user_prompt(website):
-    user_prompt = f"Here is the list of links on the website of {website.url} - "
-    user_prompt += "please decide which of these are relevant web links for a brochure about the company, respond with the full https URL in JSON format. \
-Do not include Terms of Service, Privacy, email links.\n"
-    user_prompt += "Links (some might be relative links):\n"
-    user_prompt += "\n".join(website.links)
+    template = get_user_prompt("links")
+    user_prompt = template.format(url=website.url, links="\n".join(website.links))
     return user_prompt
 
 def get_links(url):

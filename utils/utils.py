@@ -1,6 +1,7 @@
 from openai import OpenAI
 from ollama import chat
 from utils.prompt_loader import get_prompt
+from utils.user_prompt_loader import get_user_prompt
 from classes.WebsiteParser import WebsiteParser
 from settings import MODEL
 from settings import get_open_api_key, get_google_api_key, get_anthropic_api_key
@@ -38,19 +39,18 @@ def test_OpenAI_API():
     except Exception as e:
         return f"An error occurred while testing the OpenAI API: {e}"
 
-def user_prompt_for(website):
-    user_prompt = f"You are looking at a website titled {website.title}"
-    user_prompt += "\nThe contents of this website is as follows; \
-        please provide a short summary of this website in markdown. \
-        If it includes news or announcements, then summarize these too.\n\n"
-    user_prompt += website.text
+
+def build_website_summary_prompt(website):
+    template = get_user_prompt("website_summary")
+    user_prompt = template.format(title=website.title, text=website.text)
     return user_prompt
 
-def messages_for(website):
+
+def build_website_summary_messages(website):
     system_prompt = get_prompt("website_analysis")
     return [
         {"role": "system", "content": system_prompt},
-        {"role": "user", "content": user_prompt_for(website)}
+        {"role": "user", "content": build_website_summary_prompt(website)}
     ]
 
 def summarize(url, method):
@@ -59,11 +59,11 @@ def summarize(url, method):
         openai = OpenAI()
         response = openai.chat.completions.create(
             model = "gpt-4o-mini",
-            messages = messages_for(website)
+            messages = build_website_summary_messages(website)
         )
         return response.choices[0].message.content
     elif method == "Ollama":
-        response = chat(model=MODEL, messages=messages_for(website))
+        response = chat(model=MODEL, messages=build_website_summary_messages(website))
         return response['message']['content']
     else:
         return "Please, select OpenAI or Ollama in your argument."
