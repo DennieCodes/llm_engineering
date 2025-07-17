@@ -1,6 +1,6 @@
 from settings import MODEL4o
 from openai import OpenAI
-from prompts.website_brochure import system_prompt
+from utils.prompt_loader import get_prompt
 from utils.create_brochure import get_brochure_user_prompt
 from utils.utils import display_markdown
 from IPython.display import Markdown, display, update_display
@@ -8,12 +8,14 @@ from IPython.display import Markdown, display, update_display
 openai = OpenAI()
 
 def stream_brochure(company_name, url):
+
+    system_prompt = get_prompt("website_brochure")
     stream = openai.chat.completions.create(
         model=MODEL4o,
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": get_brochure_user_prompt(company_name, url)}
-          ],
+        ],
         stream=True
     )
 

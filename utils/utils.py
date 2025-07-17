@@ -1,6 +1,6 @@
 from openai import OpenAI
 from ollama import chat
-from prompts.website_analysis import system_prompt
+from utils.prompt_loader import get_prompt
 from classes.WebsiteParser import WebsiteParser
 from settings import MODEL
 from settings import get_open_api_key, get_google_api_key, get_anthropic_api_key
@@ -47,6 +47,7 @@ def user_prompt_for(website):
     return user_prompt
 
 def messages_for(website):
+    system_prompt = get_prompt("website_analysis")
     return [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt_for(website)}

@@ -1,7 +1,7 @@
 from classes.WebsiteLinksScraper import WebsiteLinkScraper
 from openai import OpenAI
 from settings import MODEL4o
-from prompts.website_scraper import link_system_prompt
+from utils.prompt_loader import get_prompt
 import json
 
 openai = OpenAI()
@@ -16,12 +16,13 @@ Do not include Terms of Service, Privacy, email links.\n"
 
 def get_links(url):
     website = WebsiteLinkScraper(url)
+    link_system_prompt = get_prompt("link_system_prompt")
     response = openai.chat.completions.create(
         model=MODEL4o,
         messages=[
             {"role": "system", "content": link_system_prompt},
             {"role": "user", "content": get_links_user_prompt(website)}
-      ],
+        ],
         response_format={"type": "json_object"}
     )
     result = response.choices[0].message.content

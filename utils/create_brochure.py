@@ -1,4 +1,4 @@
-from prompts.website_brochure import system_prompt
+from utils.prompt_loader import get_prompt
 from utils.get_all_details import get_all_details
 from settings import MODEL4o
 from openai import OpenAI
@@ -14,12 +14,13 @@ def get_brochure_user_prompt(company_name, url):
     return user_prompt
 
 def create_brochure(company_name, url):
+    system_prompt = get_prompt("website_brochure")
     response = openai.chat.completions.create(
         model=MODEL4o,
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": get_brochure_user_prompt(company_name, url)}
-          ],
+        ],
     )
     result = response.choices[0].message.content
     display_markdown(result)

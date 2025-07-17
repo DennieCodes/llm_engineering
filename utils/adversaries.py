@@ -1,9 +1,12 @@
-from prompts.adversaries import gpt_system, claude_system
+from utils.prompt_loader import get_prompt
 from classes.OpenAIClient import OpenAIClient
 from classes.ClaudeClient import ClaudeClient
 
 gpt_model = "gpt-4o-mini"
 claude_model = "claude-3-haiku-20240307"
+
+gpt_system = get_prompt("adversarial_gpt")
+claude_system = get_prompt("adversarial_claude")
 
 def call_gpt(gpt_messages, claude_messages):
     messages = [{"role": "system", "content": gpt_system}]
@@ -28,3 +31,15 @@ def call_claude(claude_messages, gpt_messages):
         user_prompt=messages,
     )
     return message.content[0].text
+
+def adversarial_conversation(turns=5, initial_message="Hi"):
+    gpt_messages = [initial_message]
+    claude_messages = [initial_message]
+    for i in range(turns):
+        gpt_next = call_gpt(gpt_messages, claude_messages)
+        print(f"GPT:\n{gpt_next}\n")
+        gpt_messages.append(gpt_next)
+
+        claude_next = call_claude(claude_messages, gpt_messages)
+        print(f"Claude:\n{claude_next}\n")
+        claude_messages.append(claude_next)
