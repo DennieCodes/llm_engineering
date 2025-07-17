@@ -1,6 +1,13 @@
-from utils.stream_brochure import stream_brochure
 
-# from settings import get_api_key
-# api_key = get_api_key()
+from utils.index import create_brochure
 
-stream_brochure("HuggingFace", "https://huggingface.co")
+def test_create_brochure_anthropic():
+    company_name = "Anthropic"
+    url = "https://www.anthropic.com/"
+    try:
+        brochure = create_brochure(company_name, url, method="Anthropic")
+        print("Brochure:\n", brochure)
+    except Exception as e:
+        print("Error during create_brochure test:", e)
+
+test_create_brochure_anthropic()

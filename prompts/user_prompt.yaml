@@ -1,0 +1,14 @@
+brochure: |
+  You are looking at a company called: {company_name}
+  Here are the contents of its landing page and other relevant pages; use this information to build a short brochure of the company in markdown.
+  {details}
+
+links: |
+  Here is the list of links on the website of {url} - please decide which of these are relevant web links for a brochure about the company, respond with the full https URL in JSON format. Do not include Terms of Service, Privacy, email links.
+  Links (some might be relative links):
+  {links}
+
+website_summary: |
+  You are looking at a website titled {title}
+  The contents of this website is as follows; please provide a short summary of this website in markdown. If it includes news or announcements, then summarize these too.
+  {text}

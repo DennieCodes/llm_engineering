@@ -1,0 +1,20 @@
+from openai import OpenAI
+from .BaseLLMClient import BaseLLMClient
+
+class OpenAIClient(BaseLLMClient):
+    _openai = OpenAI()
+    _model = "gpt-4o-mini"
+
+    def generate_content(self, user_prompt, system_message=None):
+        # user_prompt should be a list of messages as per OpenAI API
+        messages = user_prompt.copy() if isinstance(user_prompt, list) else [user_prompt]
+        if system_message:
+            # Insert system message at the start if provided
+            messages = [{"role": "system", "content": system_message}] + messages
+        return self._openai.chat.completions.create(
+            model=self._model,
+            messages=messages
+        )
+
+    def get_model_name(self):
+        return self._model
