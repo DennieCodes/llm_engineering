@@ -1,4 +1,4 @@
-from classes.WebsiteLinksScraper import WebsiteLinkScraper
+from utils.index import scrape_website_links
 from openai import OpenAI
 from settings import MODEL4o
 from utils.prompt_loader import get_prompt
@@ -13,7 +13,7 @@ def get_links_user_prompt(website):
     return user_prompt
 
 def get_links(url):
-    website = WebsiteLinkScraper(url)
+    website = scrape_website_links(url)
     link_system_prompt = get_prompt("link_system_prompt")
     response = openai.chat.completions.create(
         model=MODEL4o,

@@ -1,6 +1,13 @@
+
 from utils.index import create_brochure
 
-company_name = "Hugging Face"
-url = "https://huggingface.co/"
-brochure = create_brochure(company_name, url)
-print(brochure)
+def test_create_brochure_anthropic():
+    company_name = "Anthropic"
+    url = "https://www.anthropic.com/"
+    try:
+        brochure = create_brochure(company_name, url, method="Anthropic")
+        print("Brochure:\n", brochure)
+    except Exception as e:
+        print("Error during create_brochure test:", e)
+
+test_create_brochure_anthropic()

@@ -1,17 +1,21 @@
 import anthropic
+from .BaseLLMClient import BaseLLMClient
 
-class ClaudeClient:
+class ClaudeClient(BaseLLMClient):
 	_claude = anthropic.Anthropic()
-
-	_system_message = "You are a technological evangelist."
 	_model = "claude-3-7-sonnet-latest"
 
-	@classmethod
-	def create_messages(cls, user_prompt, model=_model, system_message=_system_message):
-		return cls._claude.messages.create(
-			model=model,
-			max_tokens=200,
-			temperature=0.7,
-			system=system_message,
-			messages=user_prompt
-		)
+	def generate_content(self, user_prompt, system_message=None):
+		# system_message is optional; Claude API allows omitting it
+		kwargs = {
+			"model": self._model,
+			"max_tokens": 200,
+			"temperature": 0.7,
+			"messages": user_prompt
+		}
+		if system_message:
+			kwargs["system"] = system_message
+		return self._claude.messages.create(**kwargs)
+
+	def get_model_name(self):
+		return self._model
