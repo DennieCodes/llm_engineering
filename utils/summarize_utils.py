@@ -1,10 +1,10 @@
 from openai import OpenAI
 from ollama import chat
-from utils.prompt_loader import get_prompt
+from utils.system_prompt_loader import get_prompt
 from utils.user_prompt_loader import get_user_prompt
 from utils.parse_website import parse_website
 from settings import MODEL
-from utils.utils import display_markdown
+from utils.display_markdown import display_markdown
 
 def build_website_summary_prompt(website):
     template = get_user_prompt("website_summary")

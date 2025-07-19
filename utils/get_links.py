@@ -1,15 +1,15 @@
 from utils.scrape_website_links import scrape_website_links
 from openai import OpenAI
 from settings import MODEL4o
-from utils.prompt_loader import get_prompt
+from utils.system_prompt_loader import get_prompt
 from utils.user_prompt_loader import get_user_prompt
 import json
 
 openai = OpenAI()
 
-def get_links_user_prompt(website):
+def get_links_user_prompt(website, url):
     template = get_user_prompt("links")
-    user_prompt = template.format(url=website.url, links="\n".join(website.links))
+    user_prompt = template.format(url=url, links="\n".join(website['links']))
     return user_prompt
 
 def get_links(url):
@@ -19,7 +19,7 @@ def get_links(url):
         model=MODEL4o,
         messages=[
             {"role": "system", "content": link_system_prompt},
-            {"role": "user", "content": get_links_user_prompt(website)}
+            {"role": "user", "content": get_links_user_prompt(website, url)}
         ],
         response_format={"type": "json_object"}
     )

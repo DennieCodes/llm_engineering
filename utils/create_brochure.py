@@ -1,4 +1,4 @@
-from utils.prompt_loader import get_prompt
+from utils.system_prompt_loader import get_prompt
 from utils.user_prompt_loader import get_user_prompt
 from utils.get_all_details import get_all_details
 from settings import MODEL4o

@@ -1,4 +1,4 @@
-from utils.prompt_loader import get_prompt
+from utils.system_prompt_loader import get_prompt
 from classes.OpenAIClient import OpenAIClient
 from classes.ClaudeClient import ClaudeClient
 
