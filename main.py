@@ -1,17 +1,13 @@
-from utils.index import create_brochure
-# from utils.get_links import get_links, get_links_user_prompt
-# from utils.index import display_markdown
+from classes.AzureOpenAiClient import AzureOpenAIClient
 
-def test_create_brochure_anthropic():
-    company_name = "Anthropic"
-    url = "https://www.anthropic.com/"
+def main():
     try:
-        brochure = create_brochure(company_name, url)
-        print("Brochure:\n", brochure)
+        client = AzureOpenAIClient()
+        response = client.generate_content("Say hello to the world in a fun way.")
+        print("✅ AzureOpenAI Response:")
+        print(response)
     except Exception as e:
-        print("Error during create_brochure test:", e)
+        print("❌ Error communicating with Azure OpenAI:")
+        print(e)
 
-test_create_brochure_anthropic()
-
-# result = get_links("https://www.anthropic.com/")
-# print(display_markdown(result))
+main()
