@@ -1,5 +1,5 @@
 from openai import OpenAI
-from settings import get_open_api_key, get_google_api_key, get_anthropic_api_key
+from settings import get_open_api_key, get_google_api_key, get_anthropic_api_key, get_azure_openai_api_key
 
 def check_api_key():
     openai_api_key = get_open_api_key()
@@ -19,6 +19,12 @@ def check_api_key():
         print(f"Google API Key exists and begins {google_api_key[:8]}")
     else:
         print("Google API Key not set")
+
+    azure_openai_api_key = get_azure_openai_api_key()
+    if azure_openai_api_key:
+        print(f"Azure OpenAI API Key exists and begins {azure_openai_api_key[:8]}")
+    else:
+        print("Azure OpenAI API Key not set")
 
 def test_OpenAI_API():
     try:

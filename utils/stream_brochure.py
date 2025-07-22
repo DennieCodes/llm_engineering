@@ -1,6 +1,6 @@
 from settings import MODEL4o
 from openai import OpenAI
-from utils.prompt_loader import get_prompt
+from utils.system_prompt_loader import get_prompt
 from utils.create_brochure import get_brochure_user_prompt
 from IPython.display import Markdown, display, update_display
 
