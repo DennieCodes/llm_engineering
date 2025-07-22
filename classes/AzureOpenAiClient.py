@@ -22,7 +22,6 @@ class AzureOpenAIClient(BaseLLMClient):
         )
 
     def generate_content(self, user_prompt: str) -> str:
-        """Generate a chat completion response from Azure OpenAI."""
         messages = [{"role": "user", "content": user_prompt}]
         response = self.client.chat.completions.create(
             model=self.deployment_name,
@@ -33,5 +32,4 @@ class AzureOpenAIClient(BaseLLMClient):
         return response.choices[0].message.content.strip()
 
     def get_model_name(self) -> str:
-        """Return the Azure deployment name as the model name."""
         return self.deployment_name
