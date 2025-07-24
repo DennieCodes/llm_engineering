@@ -17,8 +17,9 @@ def stream_gpt(user_prompt):
     openAI = OpenAIClient()
     openAI.set_stream_true()
     messages = [
-    {"role" : "system", "content": system_message},
-    {"role": "user", "content": user_prompt}]
+        {"role" : "system", "content": system_message},
+        {"role": "user", "content": user_prompt}
+    ]
     stream = openAI.generate_content(messages)
     result = ""
     for chunk in stream:
