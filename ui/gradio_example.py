@@ -20,11 +20,14 @@ def stream_gpt(user_prompt):
         {"role" : "system", "content": system_message},
         {"role": "user", "content": user_prompt}
     ]
-    stream = openAI.generate_content(messages)
-    result = ""
-    for chunk in stream:
-        result += chunk.choices[0].delta.content or ""
-        yield result
+    try:
+        stream = openAI.generate_content(user_prompt=messages)
+        for chunk in stream.choices:
+            content = chunk.message.content
+            if content:
+                yield content
+    except Exception as e:
+        yield f"❌ Error: {str(e)}"
 
 def shout(text):
     print(f"Shout has been called with input {text}")
