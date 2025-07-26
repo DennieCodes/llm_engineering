@@ -1,5 +1,11 @@
+import os
+from dotenv import load_dotenv
 from openai import OpenAI
 from .BaseLLMClient import BaseLLMClient
+
+load_dotenv(override=True)
+
+openai_api_key = os.getenv('OPENAI_API_KEY')
 
 class OpenAIClient(BaseLLMClient):
     _openai = OpenAI()
