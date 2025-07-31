@@ -1,5 +1,10 @@
+import os
+from dotenv import load_dotenv
 import anthropic
 from .BaseLLMClient import BaseLLMClient
+
+load_dotenv(override=True)
+anthropic_api_key = os.getenv('ANTHROPIC_API_KEY')
 
 class ClaudeClient(BaseLLMClient):
 	_claude = anthropic.Anthropic()
