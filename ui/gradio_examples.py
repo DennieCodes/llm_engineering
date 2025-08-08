@@ -1,8 +1,8 @@
 import gradio as gr
 from classes.OpenAIClient import OpenAIClient
+from classes.ClaudeClient import ClaudeClient
 from utils.system_prompt_loader import get_prompt
 
-user_prompt = "Give me a creative hello world message"
 system_message = get_prompt("useful_assistant")
 
 def message_gpt(user_prompt):
@@ -12,6 +12,17 @@ def message_gpt(user_prompt):
         {"role": "user", "content": user_prompt}]
     response = openAI.generate_content(messages)
     return response.choices[0].message.content
+
+def stream_claude(user_prompt):
+    claude = ClaudeClient()
+    messages = [
+        {"role": "user", "content": user_prompt}
+    ]
+    result = claude.generate_content(user_prompt=messages, system_message=system_message)
+    with result as stream:
+        for text in stream.text_stream:
+            response += text or ""
+            yield response
 
 def stream_gpt(user_prompt):
     openAI = OpenAIClient()
@@ -29,12 +40,8 @@ def stream_gpt(user_prompt):
     except Exception as e:
         yield f"❌ Error: {str(e)}"
 
-def shout(text):
-    print(f"Shout has been called with input {text}")
-    return text.upper()
-
 view = gr.Interface(
-    fn=stream_gpt,
+    fn=stream_claude,
     inputs=[gr.Textbox(label="Your message:")],
     outputs=[gr.Markdown(label="Response:")],
     flagging_mode="never")
